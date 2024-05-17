@@ -178,10 +178,16 @@ If you're having issues after reboot, you can troubleshoot the script by manuall
 
 # Misc
 - Why not Wayland?
+
   This started out with Wayland with the intention to run Ubuntu Frame. Turns out VLC does not have a connector for Wayland. After trying and failing with Xwayland to add a compatibility layer, I ended up on X11. X11 is natively supported as a connector with VLC making it much easier to get it playing together.
 
 - Why not [RTSP2Web](https://github.com/deepch/RTSPtoWeb)?
-    I did try it. It's a great project and technically should do what I need but I found with what little resources this micro PC has, the stream was not working well within Wayland and it's Chromium view. Furthermore it just has far more than I needed. I already have Frigate as my NVR, I just need a way to distribute the view. 
+
+  I did try it. It's a great project and technically should do what I need but I found with what little resources this micro PC has, the stream was not working well within Wayland and it's Chromium view. Furthermore it just has far more than I needed. I already have Frigate as my NVR, I just need a way to distribute the view.
+
+- Why VLC and not just through a browser?
+
+  This was the preferred solution originally. At the time of writing this, no modern browsers directly supports an RTSP feed. I ran assorted tests using FFMPEG to transcode RTSP to M3U8 so I could play the stream using html5. The result was terrible latency. Even worse, while the stream worked on my desktop, the Beelink I'm using for the display wouldn't even attempt to play it via Chromium in Kiosk mode under Wayland.
 
 
 
