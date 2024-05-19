@@ -6,6 +6,8 @@ For my use case, I'm running Frigate as my main NVR and displaying the "Birdseye
 
 This guide is geared towards LAN use but it can easiliy be used in conjunction with Tailscale if your devices are on different WANs.
 
+EDIT: I am working on a containerized version of this tool.
+
 
 # Environment
  - OS: Ubuntu 24.04 LTS
@@ -48,6 +50,7 @@ This guide is geared towards LAN use but it can easiliy be used in conjunction w
         sudo apt install xorg openbox
         sudo apt install python3-xdg
         sudo apt install x11-xserver-utils
+        sudo apt install mesa-va-drivers
 
 9) Configure Xorg for Non-Root Users
     
@@ -93,20 +96,32 @@ This guide is geared towards LAN use but it can easiliy be used in conjunction w
         export DISPLAY=:0
         export XDG_RUNTIME_DIR=/run/user/$(id -u)
         
-        # Start X11 server using xinit with authorization
-        xinit /usr/bin/openbox-session -- :0 vt7 &
-        
-        # Wait for X11 server to start
-        sleep 5
+        # Check if X server is running
+        if ! pgrep -x "Xorg" > /dev/null
+        then
+                # Start X11 server using xinit with authorization
+                xinit /usr/bin/openbox-session -- :0 vt7 &
+                XORG_PID=$!
+                sleep 5
+        else
+                echo "X server already running"
+        fi
         
         # OPTIONAL Disable screen blanking and energy saving features
         # xset s off          # Don't activate screensaver
         # xset -dpms          # Disable DPMS (Energy Star) features
         # xset s noblank      # Don't blank the video device
+        # setterm -blank 0 -powerdown 0
         
         # Start VLC with the desired options
         # Replace localhost with your RTSP stream
-        /snap/bin/vlc -I dummy rtsp://localhost:0000 --fullscreen --no-video-title-show --no-osd --no-audio
+        /snap/bin/vlc -I dummy rtsp://ccsmsdocker:8554/birdseye --fullscreen --no-video-title-show --no-osd --no-audio --network-caching=2000 --rtsp-tcp --codec avcodec --avcodec-hw=none --file-caching=2000 --live-caching=2000 --realrtsp-caching=2000 --no-audio
+
+
+        # Wait for VLC to finish if Xorg was started in this script
+        if [ ! -z "$XORG_PID" ]; then
+                wait $XORG_PID
+        fi
 
     Make the script executable:
 
@@ -126,6 +141,9 @@ This guide is geared towards LAN use but it can easiliy be used in conjunction w
         [Service]
         ExecStart=/home/your_username/start_vlc.sh
         Restart=always
+        RestartSec=5s
+        StartLimitBurst=5
+        StartLimitIntervalSec=60
         Environment=DISPLAY=:0
         Environment=XDG_RUNTIME_DIR=/run/user/%U
         
@@ -161,11 +179,17 @@ If you're having issues after reboot, you can troubleshoot the script by manuall
 
         sudo usermod -aG video,input your_username
 
-- Latency issues? You can play with the VLC flags within the ~/start_vlc.sh script. Expirement accordingly, you may need all, some, none, or a revised cache time.
+- Latency issues? You can play with the VLC flags within the ~/start_vlc.sh script. Expirement accordingly, you may need all, some, none, or a revised caching times.
 
         --network-caching=1000
         --rtsp-tcp
         --no-hw-decoding
+        --codec avcodec
+        --avcodec-hw=none
+        --file-caching=2000
+        --live-caching=2000
+        --realrtsp-caching=2000
+        --no-audio
 
 - Still having issues? Check the VLC logs with the following command:
 
@@ -189,6 +213,8 @@ If you're having issues after reboot, you can troubleshoot the script by manuall
 
   This was the preferred solution originally. At the time of writing this, no modern browsers directly supports an RTSP feed. I ran assorted tests using FFMPEG to transcode RTSP to M3U8 so I could play the stream using html5. The result was terrible latency. Even worse, while the stream worked on my desktop, the Beelink I'm using for the display wouldn't even attempt to play it via Chromium in Kiosk mode under Wayland.
 
+- Enable VLC Logging with the following flags:
 
+        -log-verbose=2 --file-logging --logfile=/home/vlcuser/vlc.log
 
 

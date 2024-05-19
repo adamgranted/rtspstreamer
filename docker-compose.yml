@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  vlc:
+    build: .
+    container_name: rtspstreamer
+    environment:
+      - DISPLAY=:0  # Set DISPLAY variable explicitly
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+    devices:
+      - /dev/dri:/dev/dri
