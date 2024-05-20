@@ -1,10 +1,6 @@
 
-# Containerized RTSP Streamer using X11 and MPV for Intel Graphics
-I was surprised to find there's no simple way to continuously display an RTSP stream, full screen on a display. There's plenty of libraries to manage streams, transcode, etc but I found that either: A) They did more than I needed (adding bloat to an already underpowered micro pc) or B) the latency was too high.
-
-For my use case, I'm running Frigate as my main NVR and displaying the "Birdseye" view via a restream although this guide should work for any RTSP stream that needs to be full screen. The restream already has an inherit level of latency to it so the solution needed to be as fast as possible. 
-
-This guide is geared towards LAN use but it can easiliy be used in conjunction with Tailscale if your devices are on different WANs.
+# Containerized Full Screen RTSP Streamer
+I was surprised to find there's no simple way to continuously display an RTSP stream, full screen on a display. I needed something with low latency so transcoding was not an option. This is intended to be used on devices with Intel integrated graphics.
 
 # Installation
 
@@ -37,4 +33,4 @@ Or using Docker run:
 
 # Need to run on Bare Metal?
 
-[I put together a version with VLC.]
+[I put together a bare metal guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
