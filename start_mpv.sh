@@ -9,7 +9,11 @@ MPV_LOG_FILE="/home/mpvuser/mpv.log"
 
 # Function to start MPV with VAAPI hardware acceleration
 start_mpv() {
-    mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL --log-file=$MPV_LOG_FILE
+    if [ "$ENABLE_LOGGING" = "true" ]; then
+        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL --log-file=$MPV_LOG_FILE
+    else
+        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL
+    fi
 }
 
 # Clean up any previous X server instances and lock files

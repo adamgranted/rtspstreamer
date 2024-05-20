@@ -16,7 +16,7 @@ Deploy using Docker Compose:
               - DISPLAY=:0  # Set DISPLAY variable explicitly
               - XDG_RUNTIME_DIR=/run/user/1000
               - RTSP_STREAM_URL=rtsp://localhost:8554  # Insert your RTSP stream URL
-        
+              - ENABLE_LOGGING=false  # Enable or disable logging for MPV
             volumes:
               - /tmp/.X11-unix:/tmp/.X11-unix:rw
               - /etc/localtime:/etc/localtime:ro
@@ -35,6 +35,22 @@ Or using Docker run:
 
 
 
-# Need to run on Bare Metal?
+# Need to run on bare metal?
 
-[I put together a bare metal guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
+[I put together a guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
+
+# Troubleshooting
+
+- I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
+
+        - ENABLE_LOGGING=false  # Enable or disable logging for MPV
+
+View the logs using:
+
+        docker exec -it rtspstreamer tail -f /home/mpvuser/mpv.log
+
+- Check the Docker Compose logs using:
+
+        docker compose logs
+
+
