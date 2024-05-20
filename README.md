@@ -6,7 +6,7 @@ I was surprised to find there's no simple way to continuously display an RTSP st
 
 Deploy using Docker Compose:
 
-version: '3.8'
+        version: '3.8'
 
         services:
           mpv:
