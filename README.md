@@ -7,7 +7,7 @@ I was surprised to find there's no simple way to continuously display an RTSP st
 Deploy using Docker Compose:
 
         version: '3.8'
-
+        
         services:
           mpv:
             image: ghcr.io/adamgranted/rtspstreamer:latest
@@ -15,6 +15,8 @@ Deploy using Docker Compose:
             environment:
               - DISPLAY=:0  # Set DISPLAY variable explicitly
               - XDG_RUNTIME_DIR=/run/user/1000  # Set XDG_RUNTIME_DIR explicitly
+              - RTSP_STREAM_URL=rtsp://localhost:8554  # Insert your RTSP stream URL
+        
             volumes:
               - /tmp/.X11-unix:/tmp/.X11-unix:rw
               - /etc/localtime:/etc/localtime:ro
