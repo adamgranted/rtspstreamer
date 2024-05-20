@@ -10,10 +10,24 @@ MPV_LOG_FILE="/home/mpvuser/mpv.log"
 # Function to start MPV with VAAPI hardware acceleration
 start_mpv() {
     if [ "$ENABLE_LOGGING" = "true" ]; then
-        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL --log-file=$MPV_LOG_FILE
+        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp \
+            --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 \
+            --vd-lavc-o=threads=4 --video-sync=display-resample --log-file=$MPV_LOG_FILE \
+            $RTSP_STREAM_URL
     else
-        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL
+        mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp \
+            --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 \
+            --vd-lavc-o=threads=4 --video-sync=display-resample \
+            $RTSP_STREAM_URL
     fi
+}
+
+# Function to simulate keyboard press every 15 minutes
+simulate_key_press() {
+    while true; do
+        sleep 900  # Sleep for 900 seconds (15 minutes)
+        xdotool key Shift_L
+    done
 }
 
 # Clean up any previous X server instances and lock files
@@ -35,6 +49,9 @@ fi
 xset s off
 xset -dpms
 xset s noblank
+
+# Start the key press simulation in the background
+simulate_key_press &
 
 # Loop to continuously restart MPV
 while true; do

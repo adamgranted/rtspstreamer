@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     xinit \
     openbox \
     x11-xserver-utils \
+    xdotool \
     vainfo \
     i965-va-driver \
     intel-media-va-driver-non-free \
