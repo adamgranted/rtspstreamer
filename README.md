@@ -14,18 +14,18 @@ Deploy using Docker Compose:
             container_name: rtspstreamer
             environment:
               - DISPLAY=:0  # Set DISPLAY variable explicitly
-              - XDG_RUNTIME_DIR=/run/user/1000  # Set XDG_RUNTIME_DIR explicitly
+              - XDG_RUNTIME_DIR=/run/user/1000
               - RTSP_STREAM_URL=rtsp://localhost:8554  # Insert your RTSP stream URL
         
             volumes:
               - /tmp/.X11-unix:/tmp/.X11-unix:rw
               - /etc/localtime:/etc/localtime:ro
-              - /dev/dri:/dev/dri  # Mount the DRI device for VAAPI
-              - /run/user/1000:/run/user/1000  # Mount the XDG runtime directory
+              - /dev/dri:/dev/dri
+              - /run/user/1000:/run/user/1000
             network_mode: host
             devices:
               - /dev/dri:/dev/dri
-            privileged: true  # Add this line to run the container with extended privileges
+            privileged: true
 
 
 
