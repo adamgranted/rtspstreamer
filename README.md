@@ -26,9 +26,11 @@ Deploy using Docker Compose:
             privileged: true  # Add this line to run the container with extended privileges
 
 
+
 Or using Docker run:
 
         docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
+
 
 
 # Need to run on Bare Metal?
