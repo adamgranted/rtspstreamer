@@ -4,9 +4,12 @@
 export DISPLAY=:0
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
+# Log file for MPV
+MPV_LOG_FILE="/home/mpvuser/mpv.log"
+
 # Function to start MPV with VAAPI hardware acceleration
 start_mpv() {
-    mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 rtsp://ccsmsdocker:8554/birdseye
+    mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 --vd-lavc-o=threads=4 $RTSP_STREAM_URL --log-file=$MPV_LOG_FILE
 }
 
 # Clean up any previous X server instances and lock files
@@ -29,19 +32,14 @@ xset s off
 xset -dpms
 xset s noblank
 
-# Loop to restart MPV if it crashes
+# Loop to continuously restart MPV
 while true; do
     echo "Starting MPV..."
     start_mpv
     MPV_EXIT_CODE=$?
     
-    if [ $MPV_EXIT_CODE -eq 0 ]; then
-        echo "MPV exited normally. Exiting script."
-        break
-    else
-        echo "MPV crashed with exit code $MPV_EXIT_CODE. Restarting in 60 seconds..."
-        sleep 60
-    fi
+    echo "MPV exited with exit code $MPV_EXIT_CODE. Restarting in 60 seconds..."
+    sleep 60
 done
 
 # Wait for Xorg to finish if it was started in this script
