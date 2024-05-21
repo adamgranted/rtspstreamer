@@ -45,9 +45,9 @@ Or using Docker run:
 
         - ENABLE_LOGGING=false  # Enable or disable logging for MPV
 
-View the logs using:
+    View the logs using:
 
-    docker exec -it rtspstreamer tail -f /home/mpvuser/mpv.log
+        docker exec -it rtspstreamer tail -f /home/mpvuser/mpv.log
 
 2) Check the Docker Compose logs using:
 
