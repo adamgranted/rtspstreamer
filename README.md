@@ -43,7 +43,7 @@ Or using Docker run:
 
 1) I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
 
-    - ENABLE_LOGGING=false  # Enable or disable logging for MPV
+      - ENABLE_LOGGING=false  # Enable or disable logging for MPV
 
 View the logs using:
 
