@@ -31,7 +31,7 @@ Deploy using Docker Compose:
 
 Or using Docker run:
 
-        docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
+        docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -e RTSP_STREAM_URL=rtsp://localhost:8554 -e ENABLE_LOGGING=false -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
 
 
 
