@@ -11,22 +11,22 @@ MPV_LOG_FILE="/home/mpvuser/mpv.log"
 start_mpv() {
     if [ "$ENABLE_LOGGING" = "true" ]; then
         mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp \
-            --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 \
+            --demuxer-readahead-secs=20 --cache=yes --cache-secs=60 \
             --vd-lavc-o=threads=4 --video-sync=display-resample --log-file=$MPV_LOG_FILE \
             $RTSP_STREAM_URL
     else
         mpv --fullscreen --hwdec=vaapi --vaapi-device=/dev/dri/renderD128 --rtsp-transport=tcp \
-            --demuxer-readahead-secs=1 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=50000000 \
+            --demuxer-readahead-secs=20 --cache=yes --cache-secs=60 \
             --vd-lavc-o=threads=4 --video-sync=display-resample \
             $RTSP_STREAM_URL
     fi
 }
 
-# Function to simulate keyboard press every 15 minutes
-simulate_key_press() {
+# Function to simulate mouse movement every 15 minutes
+simulate_mouse_movement() {
     while true; do
         sleep 900  # Sleep for 900 seconds (15 minutes)
-        xdotool key Shift_L
+        xdotool mousemove 0 0 mousemove restore  # Move the mouse to (0,0) and back
     done
 }
 
@@ -50,8 +50,8 @@ xset s off
 xset -dpms
 xset s noblank
 
-# Start the key press simulation in the background
-simulate_key_press &
+# Start the mouse movement simulation in the background
+simulate_mouse_movement &
 
 # Loop to continuously restart MPV
 while true; do
