@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y \
 RUN useradd -ms /bin/bash mpvuser && \
     echo 'mpvuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# Copy mpv_inhibit_gnome.so to the specified directory
+COPY mpv_inhibit_gnome.so /home/mpvuser/.config/mpv/scripts/mpv_inhibit_gnome.so
+
 # Switch to root to copy the script and set permissions
 USER root
 
