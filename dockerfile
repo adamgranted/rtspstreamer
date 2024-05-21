@@ -26,6 +26,7 @@ RUN useradd -ms /bin/bash mpvuser && \
     echo 'mpvuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Copy mpv_inhibit_gnome.so to the specified directory
+# Credit to https://github.com/Guldoman/mpv_inhibit_gnome
 COPY mpv_inhibit_gnome.so /home/mpvuser/.config/mpv/scripts/mpv_inhibit_gnome.so
 
 # Switch to root to copy the script and set permissions

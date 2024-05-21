@@ -34,11 +34,6 @@ Or using Docker run:
     docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -e RTSP_STREAM_URL=rtsp://localhost:8554 -e ENABLE_LOGGING=false -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
 
 
-
-# Need to run on bare metal?
-
-[I put together a guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
-
 # Troubleshooting
 
 1) I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
@@ -54,3 +49,6 @@ Or using Docker run:
         docker compose logs
 
 
+# Not using Docker?
+
+[I put together a bare metal guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
