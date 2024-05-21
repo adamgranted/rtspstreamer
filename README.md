@@ -31,7 +31,7 @@ Deploy using Docker Compose:
 
 Or using Docker run:
 
-        docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -e RTSP_STREAM_URL=rtsp://localhost:8554 -e ENABLE_LOGGING=false -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
+    docker run --net host --name rtspstreamer -e DISPLAY=:0 -e XDG_RUNTIME_DIR=/run/user/1000 -e RTSP_STREAM_URL=rtsp://localhost:8554 -e ENABLE_LOGGING=false -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /etc/localtime:/etc/localtime:ro -v /dev/dri:/dev/dri -v /run/user/1000:/run/user/1000 --device /dev/dri:/dev/dri --privileged ghcr.io/adamgranted/rtspstreamer:latest
 
 
 
@@ -41,16 +41,16 @@ Or using Docker run:
 
 # Troubleshooting
 
-- I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
+1) I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
 
-        - ENABLE_LOGGING=false  # Enable or disable logging for MPV
+    - ENABLE_LOGGING=false  # Enable or disable logging for MPV
 
 View the logs using:
 
-        docker exec -it rtspstreamer tail -f /home/mpvuser/mpv.log
+    docker exec -it rtspstreamer tail -f /home/mpvuser/mpv.log
 
-- Check the Docker Compose logs using:
+2) Check the Docker Compose logs using:
 
-        docker compose logs
+    docker compose logs
 
 
