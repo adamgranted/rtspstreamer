@@ -56,3 +56,8 @@ WORKDIR /home/mpvuser
 
 # Run the MPV start script
 CMD ["/home/mpvuser/start_mpv.sh"]
+
+# Labels
+LABEL org.opencontainers.image.source=https://github.com/adamgranted/rtspstreamer
+LABEL org.opencontainers.image.description="RTSP Streamer"
+LABEL org.opencontainers.image.licenses=MIT
