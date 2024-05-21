@@ -51,6 +51,6 @@ Or using Docker run:
 
 2) Check the Docker Compose logs using:
 
-    docker compose logs
+        docker compose logs
 
 
