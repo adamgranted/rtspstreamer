@@ -36,9 +36,9 @@ Or using Docker run:
 
 # Troubleshooting
 
-1) I set up an ENV flag to easily enable MPV logging within the container. Set the flag to true as needed.
+1) Use the ENV flag to enable MPV logging within the container.
 
-        - ENABLE_LOGGING=false  # Enable or disable logging for MPV
+        - ENABLE_LOGGING=true  # Enable or disable logging for MPV
 
     View the logs using:
 
@@ -52,3 +52,11 @@ Or using Docker run:
 # Not using Docker?
 
 [I put together a bare metal guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
+
+# Mise
+
+- Why not VLC?
+  VLC is preferred but I faced issues with it. RTSP is not supported with the apt version of VLC. Snap does support it but won't place nice with containers. Ultimately it was easier to switch to MPV instead of building VLC with the proper flags.
+
+- Why not FFMPEG?
+  Transcoding was my first route. I wanted the stream to be viewable within a browser for easier display management. The latency was terrible though, even with hardware acceleration I found my transcode time to be nearly 2 minutes by the time it was displaying in the browser. Too slow for my needs.
