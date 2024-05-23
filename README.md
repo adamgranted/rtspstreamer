@@ -53,7 +53,7 @@ Or using Docker run:
 
 [I put together a bare metal guide with VLC and X11.](https://github.com/adamgranted/rtspstreamer/blob/main/BareMetal_README.md)
 
-# Mise
+# Misc
 
 - Why not VLC?
   VLC is preferred but I faced issues with it. RTSP is not supported with the apt version of VLC. Snap does support it but won't place nice with containers. Ultimately it was easier to switch to MPV instead of building VLC with the proper flags.
